@@ -90,9 +90,9 @@ SCHEMA
 
     The "id" column should probably be 72 characters. It needs to handle the
     longest string that can be returned by "generate_session_id" in
-    Catalyst::Plugin::Authentication, plus another eight characters for
-    internal use. This is less than 72 characters when SHA-1 or MD5 is used,
-    but SHA-256 will need all 72 characters.
+    Catalyst::Plugin::Session, plus another eight characters for internal
+    use. This is less than 72 characters when SHA-1 or MD5 is used, but
+    SHA-256 will need all 72 characters.
 
     The "session_data" column should be a long text field. Session data is
     encoded using MIME::Base64 before being stored in the database.
