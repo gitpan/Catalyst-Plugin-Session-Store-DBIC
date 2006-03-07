@@ -7,7 +7,7 @@ SYNOPSIS
         CREATE TABLE sessions (
             id           CHAR(72) PRIMARY KEY,
             session_data TEXT,
-            expires      INT
+            expires      INTEGER
         );
 
         # Create the corresponding table class
@@ -105,6 +105,10 @@ SCHEMA
     column types must match the above.
 
 INTERNAL METHODS
+  setup_session
+    Verify that the configuration is valid, i.e. that a value for the
+    "dbic_class" configuration parameter is provided.
+
   setup_finished
     Hook into the configured session class.
 
