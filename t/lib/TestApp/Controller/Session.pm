@@ -22,4 +22,18 @@ sub output : Local {
     $c->res->body($c->session->{$key});
 }
 
+sub delete : Local {
+    my ($self, $c) = @_;
+
+    $c->delete_session;
+    $c->res->body($c->session_is_valid ? 'not ok' : 'ok');
+}
+
+sub delete_expired : Local {
+    my ($self, $c) = @_;
+
+    $c->delete_expired_sessions;
+    $c->res->body('ok');
+}
+
 1;

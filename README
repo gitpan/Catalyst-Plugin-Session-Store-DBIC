@@ -40,14 +40,40 @@ DESCRIPTION
     This Catalyst::Plugin::Session storage module saves session data in your
     database via DBIx::Class.
 
+METHODS
+  setup_session
+    Verify that the configuration is valid, i.e. that a value for the
+    "dbic_class" configuration parameter is provided.
+
+  setup_finished
+    Hook into the configured session class.
+
+  get_session_data
+    (Required method for a Catalyst::Plugin::Session::Store.) Return data
+    for the specified session key. Note that session expiration data is
+    stored alonside the session itself.
+
+  store_session_data
+    (Required method for a Catalyst::Plugin::Session::Store.) Store the
+    specified data for the specified session. Session expiration data is
+    stored alongside the session itself.
+
+  delete_session_data
+    (Required method for a Catalyst::Plugin::Session::Store.) Delete the
+    specified session from the backend store.
+
+  delete_expired_sessions
+    (Required method for a Catalyst::Plugin::Session::Store.) Delete all
+    expired sessions.
+
 CONFIGURATION
     The following parameters should be placed in your application
     configuration under the "session" key.
 
   dbic_class
     (Required) The name of the DBIx::Class that represents a session in the
-    database. Can be the full class name or just the model name (i.e. the
-    part after "MyApp::Model").
+    database. It is recommended that you provide only the part after
+    "MyApp::Model", e.g. "DBIC::Session".
 
     If you are using Catalyst::Model::DBIC::Schema, the following layout is
     recommended:
@@ -104,28 +130,8 @@ SCHEMA
     "data_field", and "expires_field" configuration parameters. However, the
     column types must match the above.
 
-INTERNAL METHODS
-  setup_session
-    Verify that the configuration is valid, i.e. that a value for the
-    "dbic_class" configuration parameter is provided.
-
-  setup_finished
-    Hook into the configured session class.
-
-  get_session_data
-    Required method for a Catalyst::Plugin::Session::Store.
-
-  store_session_data
-    Required method for a Catalyst::Plugin::Session::Store.
-
-  delete_session_data
-    Required method for a Catalyst::Plugin::Session::Store.
-
-  delete_expired_sessions
-    Required method for a Catalyst::Plugin::Session::Store.
-
 AUTHOR
-    Daniel Westermann-Clark, <danieltwc@cpan.org>
+    Daniel Westermann-Clark <danieltwc@cpan.org>
 
 ACKNOWLEDGMENTS
     * Andy Grundman, for Catalyst::Plugin::Session::Store::DBI
