@@ -8,7 +8,7 @@ use MIME::Base64;
 use NEXT;
 use Storable qw/nfreeze thaw/;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 __PACKAGE__->mk_classdata(qw/_dbic_session_resultset/);
 
@@ -140,9 +140,12 @@ sub get_session_data {
     return unless $session;
 
     my $data = $session->get_column($field);
-    return $data if $want_expires;
-
-    return thaw(decode_base64($data));
+    if ($want_expires) {
+        return $data;
+    }
+    elsif ($data) {
+        return thaw(decode_base64($data));
+    }
 }
 
 =head2 store_session_data
@@ -166,10 +169,12 @@ sub store_session_data {
     }
 
     my %fields = (
-        $config->{id_field}      => $key,
-        $config->{expires_field} => $c->session_expires,
+        $config->{id_field} => $key,
     );
-    unless ($setting_expires) {
+    if ($setting_expires) {
+        $fields{$config->{expires_field}} = $c->session_expires;
+    }
+    else {
         $fields{$config->{data_field}} = encode_base64(nfreeze($data));
     }
 
