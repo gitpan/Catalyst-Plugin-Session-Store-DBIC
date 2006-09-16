@@ -38,33 +38,43 @@ SYNOPSIS
 
 DESCRIPTION
     This Catalyst::Plugin::Session storage module saves session data in your
-    database via DBIx::Class.
+    database via DBIx::Class. It's actually just a wrapper around
+    Catalyst::Plugin::Session::Store::Delegate; if you need complete control
+    over how your sessions are stored, you probably want to use that
+    instead.
 
 METHODS
-  setup_session
-    Verify that the configuration is valid, i.e. that a value for the
-    "dbic_class" configuration parameter is provided.
-
   setup_finished
     Hook into the configured session class.
 
-  get_session_data
-    (Required method for a Catalyst::Plugin::Session::Store.) Return data
-    for the specified session key. Note that session expiration data is
-    stored alonside the session itself.
+  session_store_dbic_class
+    Return the DBIx::Class class name to be passed to "$c->model". Defaults
+    to "DBIC::Session".
 
-  store_session_data
-    (Required method for a Catalyst::Plugin::Session::Store.) Store the
-    specified data for the specified session. Session expiration data is
-    stored alongside the session itself.
+  session_store_dbic_id_field
+    Return the configured ID field name. Defaults to "id".
+
+  session_store_dbic_data_field
+    Return the configured data field name. Defaults to "session_data".
+
+  session_store_dbic_expires_field
+    Return the configured expires field name. Defaults to "expires".
+
+  session_store_model
+    Return the model used to find a session.
+
+  get_session_store_delegate
+    Load the row corresponding to the specified session ID. If none is
+    found, one is automatically created.
+
+  session_store_delegate_key_to_accessor
+    Match the specified key and operation to the session ID and field name.
 
   delete_session_data
-    (Required method for a Catalyst::Plugin::Session::Store.) Delete the
-    specified session from the backend store.
+    Delete the specified session from the backend store.
 
   delete_expired_sessions
-    (Required method for a Catalyst::Plugin::Session::Store.) Delete all
-    expired sessions.
+    Delete all expired sessions.
 
 CONFIGURATION
     The following parameters should be placed in your application
@@ -137,6 +147,8 @@ ACKNOWLEDGMENTS
     * Andy Grundman, for Catalyst::Plugin::Session::Store::DBI
     * David Kamholz, for most of the testing code (from
     Catalyst::Plugin::Authentication::Store::DBIC)
+    * Yuval Kogman, for assistance in converting to
+    Catalyst::Plugin::Session::Store::Delegate
 
 COPYRIGHT
     Copyright 2006 Daniel Westermann-Clark, all rights reserved.
