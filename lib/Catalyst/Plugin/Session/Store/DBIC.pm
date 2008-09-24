@@ -9,7 +9,7 @@ use MIME::Base64 ();
 use NEXT;
 use Storable ();
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 =head1 NAME
 
@@ -154,8 +154,9 @@ sub get_session_store_delegate {
     my ($c, $id) = @_;
 
     Catalyst::Plugin::Session::Store::DBIC::Delegate->new({
-        model    => $c->session_store_model($id),
-        id_field => $c->session_store_dbic_id_field,
+        model      => $c->session_store_model($id),
+        id_field   => $c->session_store_dbic_id_field,
+        data_field => $c->session_store_dbic_data_field,
     });
 }
 
@@ -293,6 +294,18 @@ SHA-1 or MD5 is used, but SHA-256 will need all 72 characters.
 The C<session_data> column should be a long text field.  Session data
 is encoded using L<MIME::Base64> before being stored in the database.
 
+Note that MySQL C<TEXT> fields only store 64 kB, so if your session
+data will exceed that size you'll want to use C<MEDIUMTEXT>,
+C<MEDIUMBLOB>, or larger. If you configure your
+L<DBIx::Class::ResultSource> to include the size of the column, you
+will receive warnings for this problem:
+
+    This session requires 1180 bytes of storage, but your database
+    column 'session_data' can only store 200 bytes. Storing this
+    session may not be reliable; increase the size of your data field
+
+See L<DBIx::Class::ResultSource/add_columns> for more information.
+
 The C<expires> column stores the future expiration time of the
 session.  This may be null for per-user and flash sessions.
 
@@ -316,11 +329,14 @@ Daniel Westermann-Clark E<lt>danieltwc@cpan.orgE<gt>
 =item * Yuval Kogman, for assistance in converting to
         L<Catalyst::Plugin::Session::Store::Delegate>
 
+=item * Jay Hannah, for tests and warning when session size 
+        exceeds DBIx::Class storage size.
+
 =back
 
 =head1 COPYRIGHT
 
-Copyright 2006 Daniel Westermann-Clark, all rights reserved.
+Copyright 2006-2008 Daniel Westermann-Clark, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

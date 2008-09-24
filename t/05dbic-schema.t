@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use FindBin;
 use Test::More;
+use Test::Warn;
 
 use lib "$FindBin::Bin/lib";
 
@@ -20,7 +21,7 @@ BEGIN {
     eval { require Catalyst::Model::DBIC::Schema }
         or plan skip_all => "Catalyst::Model::DBIC::Schema is required for this test";
 
-    plan tests => 12;
+    plan tests => 14;
 
     $ENV{TESTAPP_DB_FILE} = "$FindBin::Bin/session.db";
 
@@ -62,6 +63,12 @@ $mech->content_is($value, 'got session value back');
 # Check session
 $mech->get_ok("http://localhost/session/output?key=$key", 'request to get session value');
 $mech->content_is($value, 'got session value back');
+
+# Exceed our session storage capactity
+$value = "blah" x 200;
+warning_like {
+    $mech->get_ok("http://localhost/session/setup?key=$key&value=$value", 'exceeding storage capacity');
+} qr/This session requires \d+ bytes of storage, but your database column 'data' can only store 200 bytes. Storing this session may not be reliable; increase the size of your data field/, 'warning thrown as expected';
 
 # Delete session
 $mech->get_ok('http://localhost/session/delete', 'request to delete session');
