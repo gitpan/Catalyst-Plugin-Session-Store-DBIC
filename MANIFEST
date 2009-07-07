@@ -1,3 +1,4 @@
+.gitignore
 Changes
 lib/Catalyst/Plugin/Session/Store/DBIC.pm
 lib/Catalyst/Plugin/Session/Store/DBIC/Delegate.pm

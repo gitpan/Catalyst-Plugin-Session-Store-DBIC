@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Catalyst-Plugin-Session-Store-DBIC
-version:            0.09
+version:            0.10
 abstract:           Store your sessions via DBIx::Class
 author:
     - Daniel Westermann-Clark <danieltwc@cpan.org>
@@ -14,7 +14,7 @@ requires:
     Carp:                 0
     Catalyst:             5.65
     Catalyst::Exception:  0
-    Catalyst::Plugin::Session::Store::Delegate:  0.02
+    Catalyst::Plugin::Session::Store::Delegate:  0.04
     Class::Accessor::Fast:  0
     DBIx::Class:          0.07000
     FindBin:              0
@@ -28,7 +28,7 @@ no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.50
+generated_by:       ExtUtils::MakeMaker version 6.52
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4
