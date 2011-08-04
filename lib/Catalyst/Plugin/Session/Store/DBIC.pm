@@ -9,7 +9,7 @@ use MIME::Base64 ();
 use MRO::Compat;
 use Storable ();
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 =head1 NAME
 
@@ -336,7 +336,9 @@ Daniel Westermann-Clark E<lt>danieltwc@cpan.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2006-2008 Daniel Westermann-Clark, all rights reserved.
+Copyright (c) 2006 - 2009
+the Catalyst::Plugin::Session::Store::DBIC L</AUTHOR>
+as listed above.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
