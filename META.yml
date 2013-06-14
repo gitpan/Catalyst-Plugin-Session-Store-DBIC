@@ -1,35 +1,35 @@
---- #YAML:1.0
-name:               Catalyst-Plugin-Session-Store-DBIC
-version:            0.12
-abstract:           Store your sessions via DBIx::Class
+---
+abstract: 'Store your sessions via DBIx::Class'
 author:
-    - Daniel Westermann-Clark <danieltwc@cpan.org>
-license:            unknown
-distribution_type:  module
-configure_requires:
-    ExtUtils::MakeMaker:  0
+  - 'Daniel Westermann-Clark <danieltwc@cpan.org>'
 build_requires:
-    ExtUtils::MakeMaker:  0
-requires:
-    Carp:                 0
-    Catalyst:             5.65
-    Catalyst::Exception:  0
-    Catalyst::Plugin::Session::Store::Delegate:  0.05
-    Class::Accessor::Fast:  0
-    DBIx::Class:          0.07000
-    FindBin:              0
-    MIME::Base64:         0
-    MRO::Compat:          0
-    Scalar::Util:         0
-    Storable:             0
-    Test::More:           0
-    Test::Warn:           0.20
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.57_05
+  ExtUtils::MakeMaker: 0
+configure_requires:
+  ExtUtils::MakeMaker: 0
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.120921'
+license: unknown
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
-repository:         http://dev.catalyst.perl.org/repos/Catalyst/Catalyst-Plugin-Session-Store-DBIC/
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Catalyst-Plugin-Session-Store-DBIC
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  Carp: 0
+  Catalyst: 5.65
+  Catalyst::Exception: 0
+  Catalyst::Plugin::Session::Store::Delegate: 0.05
+  Class::Accessor::Fast: 0
+  DBIx::Class: 0.07000
+  FindBin: 0
+  MIME::Base64: 0
+  MRO::Compat: 0
+  Scalar::Util: 0
+  Storable: 0
+  Test::More: 0
+  Test::Warn: 0.20
+version: 0.13
+x_repository: http://dev.catalyst.perl.org/repos/Catalyst/Catalyst-Plugin-Session-Store-DBIC/
